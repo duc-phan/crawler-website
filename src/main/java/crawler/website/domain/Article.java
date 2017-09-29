@@ -1,32 +1,32 @@
 package crawler.website.domain;
 
-import java.util.Arrays;
-import java.util.Collections;
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
-/**
- * Created by DUNGDV on 8/8/2017.
- */
+@Entity
 public class Article {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
+
+   private Date createdAt;
 
     private String url;
-
-    /*
-    * shortUrl identify for article
-    * Example:
-    * url = "http://www.cbc.bb/index.php/news/item/1644-trump-threatens-fury-against-n-korea"
-    * shortUrl = "1644-trump-threatens-fury-against-n-korea"
-    * */
     private String shortUrl;
 
-    private boolean isFetched;
-
+    @Column(columnDefinition = "Text")
     private String content;
 
-    private List<String> imageLinks;
-
+    @Column(columnDefinition = "Text")
     private String imageLink;
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
     private String author;
 
@@ -40,14 +40,6 @@ public class Article {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public boolean isFetched() {
-        return isFetched;
-    }
-
-    public void setFetched(boolean fetched) {
-        isFetched = fetched;
     }
 
     public String getContent() {
@@ -82,14 +74,6 @@ public class Article {
         this.title = title;
     }
 
-    public List<String> getImageLinks() {
-        return imageLinks;
-    }
-
-    public void setImageLinks(List<String> imageLinks) {
-        this.imageLinks = imageLinks;
-    }
-
     public String getImageLink() {
         return imageLink;
     }
@@ -104,22 +88,6 @@ public class Article {
 
     public void setShortUrl(String shortUrl) {
         this.shortUrl = shortUrl;
-    }
-
-    public void deserializeImageLink() {
-        if (imageLink != null && !imageLink.isEmpty()) {
-            imageLinks = Arrays.asList(imageLink.split(","));
-        } else {
-            imageLinks = Collections.EMPTY_LIST;
-        }
-    }
-
-    public void serializeImageLink() {
-        if (imageLinks != null && imageLinks.size() > 0) {
-            imageLink = String.join(",", imageLinks);
-        } else {
-            imageLink = "";
-        }
     }
 
 }

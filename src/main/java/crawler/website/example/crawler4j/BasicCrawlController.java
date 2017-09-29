@@ -32,24 +32,24 @@ public class BasicCrawlController {
     private static final Logger logger = LoggerFactory.getLogger(BasicCrawlController.class);
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 2) {
-            logger.info("Needed parameters: ");
-            logger.info("\t rootFolder (it will contain intermediate crawl data)");
-            logger.info("\t numberOfCralwers (number of concurrent threads)");
-            return;
-        }
+//        if (args.length != 2) {
+//            logger.info("Needed parameters: ");
+//            logger.info("\t rootFolder (it will contain intermediate crawl data)");
+//            logger.info("\t numberOfCralwers (number of concurrent threads)");
+//            return;
+//        }
 
     /*
      * crawlStorageFolder is a folder where intermediate crawl data is
      * stored.
      */
-        String crawlStorageFolder = args[0];
+        String crawlStorageFolder = System.getProperty("java.io.tmpdir");
 
     /*
      * numberOfCrawlers shows the number of concurrent threads that should
      * be initiated for crawling.
      */
-        int numberOfCrawlers = Integer.parseInt(args[1]);
+        int numberOfCrawlers = 10;
 
         CrawlConfig config = new CrawlConfig();
 
@@ -65,13 +65,13 @@ public class BasicCrawlController {
      * You can set the maximum crawl depth here. The default value is -1 for
      * unlimited depth
      */
-        config.setMaxDepthOfCrawling(2);
+        config.setMaxDepthOfCrawling(1);
 
     /*
      * You can set the maximum number of pages to crawl. The default value
      * is -1 for unlimited number of pages
      */
-        config.setMaxPagesToFetch(1000);
+        config.setMaxPagesToFetch(10);
 
         /**
          * Do you want crawler4j to crawl also binary data ?

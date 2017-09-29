@@ -63,13 +63,13 @@ public class BasicCrawler extends WebCrawler {
         String parentUrl = page.getWebURL().getParentUrl();
         String anchor = page.getWebURL().getAnchor();
 
-        logger.debug("Docid: {}", docid);
+        logger.info("Docid: {}", docid);
         logger.info("URL: {}", url);
-        logger.debug("Domain: '{}'", domain);
-        logger.debug("Sub-domain: '{}'", subDomain);
-        logger.debug("Path: '{}'", path);
-        logger.debug("Parent page: {}", parentUrl);
-        logger.debug("Anchor text: {}", anchor);
+        logger.info("Domain: '{}'", domain);
+        logger.info("Sub-domain: '{}'", subDomain);
+        logger.info("Path: '{}'", path);
+        logger.info("Parent page: {}", parentUrl);
+        logger.info("Anchor text: {}", anchor);
 
         if (page.getParseData() instanceof HtmlParseData) {
             HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();

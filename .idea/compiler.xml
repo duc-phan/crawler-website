@@ -7,10 +7,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="crawler-website" />
+        <module name="crawler4j" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
-      <module name="crawler-website" target="1.5" />
+    <bytecodeTargetLevel>
+      <module name="crawler-website" target="1.8" />
+      <module name="crawler4j" target="1.8" />
+      <module name="crawler4j-parent" target="1.5" />
+      <module name="CrawlerWithDB" target="1.8" />
+      <module name="spring-boot-jpa-oracle-example" target="1.8" />
+      <module name="spring-boot-mysql-jpa-hibernate" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

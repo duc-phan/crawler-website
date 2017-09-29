@@ -1,21 +1,30 @@
 package crawler.website.service;
 
-import crawler.website.constant.WebsiteUrlConstant;
+import crawler.website.domain.Article;
+import crawler.website.domain.ArticleService;
+import crawler.website.parser.CaribbeanNewsNowParser;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.measure.unit.SystemOfUnits;
-import java.util.Set;
+import java.util.Date;
 import java.util.regex.Pattern;
+
 
 public class WebsiteCrawler extends WebCrawler {
 
     private static final Pattern EXTENSIONS_FILTER = Pattern.compile(".*\\.(bmp|gif|jpg|png|pdf|js|css|mp3|mp4|zip|gz)$");
+    private static final Logger logger = LoggerFactory.getLogger(WebsiteCrawler.class);
+    private static int number = 1;
+
+    private ArticleService articleService;
+
+    public WebsiteCrawler(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     /**
      * You should implement this function to specify whether the given url
@@ -30,7 +39,7 @@ public class WebsiteCrawler extends WebCrawler {
         }
 
         // Only accept the url if it is in the "www.ics.uci.edu" domain and protocol is "http".
-        return href.startsWith(WebsiteUrlConstant.CARIBBEAN_NEW_NOW);
+        return href.startsWith(CaribbeanNewsNowParser.HOME_PAGE_URL);
     }
 
     /**
@@ -42,24 +51,33 @@ public class WebsiteCrawler extends WebCrawler {
 
         if (page.getParseData() instanceof HtmlParseData) {
             HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-            String text = htmlParseData.getText();
             String html = htmlParseData.getHtml();
-            Set<WebURL> links = htmlParseData.getOutgoingUrls();
-            Document doc = Jsoup.parseBodyFragment(html);
-            Elements header = doc.getElementsByClass("td-post-title");
-            Elements content = doc.getElementsByClass("td-post-content");
+            CaribbeanNewsNowParser parser = new CaribbeanNewsNowParser(html);
+            if(parser.getArticle() == null) {
+                return;
+            }
 
-            System.out.println("URL:");
-            System.out.println("    " + page.getWebURL().getURL());
+            Article article = new Article();
+            article.setCreatedAt(new Date());
+            article.setUrl(page.getWebURL().getURL());
+            article.setShortUrl(page.getWebURL().getPath());
+            article.setTitle(parser.parseArticleTitle());
+            article.setPublishDate(parser.parseArticlePublishDate());
+            article.setContent(parser.parseArticleContent());
+            article.setImageLink(parser.parseArticleImageLink());
 
-            System.out.println("Post Header:");
-            System.out.println("    " + header.text());
+            articleService.saveArticle(article);
 
-            System.out.println("Content:");
-            System.out.println("    " + content.text());
-
-//            System.out.println("Image Link:");
-//            System.out.println("    ");
+            logger.info("Article URL:");
+            logger.info("    " + page.getWebURL().getURL());
+            logger.info("Article Title:");
+            logger.info("    " + parser.parseArticleTitle());
+            logger.info("Article Publish Date:");
+            logger.info("   " + parser.parseArticlePublishDate());
+            logger.info("Article Content:");
+            logger.info("    " + parser.parseArticleContent());
+            logger.info("Article Image Links:");
+            logger.info("   " + parser.parseArticleImageLink());
         }
     }
 }

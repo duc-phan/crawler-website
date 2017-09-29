@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/crawler-website.iml" filepath="$PROJECT_DIR$/crawler-website.iml" />
+      <module fileurl="file://$USER_HOME$/Documents/GitHub/crawler4j/crawler4j/crawler4j.iml" filepath="$USER_HOME$/Documents/GitHub/crawler4j/crawler4j/crawler4j.iml" />
+      <module fileurl="file://$USER_HOME$/Documents/GitHub/crawler4j/crawler4j-parent.iml" filepath="$USER_HOME$/Documents/GitHub/crawler4j/crawler4j-parent.iml" />
     </modules>
   </component>
 </project>
