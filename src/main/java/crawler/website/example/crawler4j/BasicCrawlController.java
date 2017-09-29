@@ -110,9 +110,8 @@ public class BasicCrawlController {
      * URLs that are fetched and then the crawler starts following links
      * which are found in these pages
      */
-        controller.addSeed("http://www.ics.uci.edu/");
-        controller.addSeed("http://www.ics.uci.edu/~lopes/");
-        controller.addSeed("http://www.ics.uci.edu/~welling/");
+        controller.addSeed("http://www.caribbeannewsnow.com/topstory-West-Indies-to-bring-carnival-to-Belfast-35475.html");
+        controller.addSeed("http://wp.caribbeannewsnow.com/2017/09/17/maria-expected-become-hurricane-later-sunday-watches-effect-leeward-islands/");
 
     /*
      * Start the crawl. This is a blocking operation, meaning that your code

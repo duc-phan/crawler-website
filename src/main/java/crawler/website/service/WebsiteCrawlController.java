@@ -1,7 +1,7 @@
 package crawler.website.service;
 
 import crawler.website.domain.ArticleService;
-import crawler.website.parser.CaribbeanNewsNowParser;
+import crawler.website.parser.ArchivedCaribbeanNewsNowParser;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
@@ -45,7 +45,7 @@ public class WebsiteCrawlController implements CommandLineRunner {
 //        config.setMaxDepthOfCrawling(2);
 
         // You can set the maximum number of pages to crawl. The default value is -1 for unlimited number of pages
-//        config.setMaxPagesToFetch(10);
+        config.setMaxPagesToFetch(10);
 
         //Do you want crawler4j to crawl also binary data? example: the contents of pdf, or the metadata of images etc
         config.setIncludeBinaryContentInCrawling(false);
@@ -69,7 +69,8 @@ public class WebsiteCrawlController implements CommandLineRunner {
         CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
 
         // For each crawl, you need to add some seed urls. These are the first URLs that are fetched and then the crawler starts following links which are found in these pages
-        controller.addSeed(CaribbeanNewsNowParser.HOME_PAGE_URL);
+//        controller.addSeed(WpCaribbeanNewsNowParser.HOME_PAGE_URL);
+        controller.addSeed(ArchivedCaribbeanNewsNowParser.FIRST_PAGE_URL);
 
         WebsiteCrawlerFactory factory = new WebsiteCrawlerFactory(articleService);
 
