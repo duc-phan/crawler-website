@@ -62,10 +62,12 @@ public class WebsiteCrawler extends WebCrawler {
             } else if (ArchivedCaribbeanNewsNowParser.SUB_DOMAIN.equals(subDomain)) {
                 parser = new ArchivedCaribbeanNewsNowParser(html);
             } else {
+                logger.info("--------- NOT SUPPORT SUB DOMAIN --------------------------------");
                 return;
             }
 
             if(!parser.hasArticle()) {
+                logger.info("--------- NO ARTICLE ---------------------------------");
                 return;
             }
 
@@ -78,7 +80,7 @@ public class WebsiteCrawler extends WebCrawler {
             article.setContent(parser.parseArticleContent());
             article.setImageLink(parser.parseArticleImageLink());
 
-//            articleService.saveArticle(article);
+            articleService.saveArticle(article);
 
             logger.info("Article URL:");
             logger.info("    " + page.getWebURL().getURL());

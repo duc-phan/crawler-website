@@ -36,6 +36,6 @@ public class WebCrawlerWithDepth {
     }
 
     public static void main(String[] args) {
-        new WebCrawlerWithDepth().getPageLinks("http://www.mkyong.com/", 0);
+        new WebCrawlerWithDepth().getPageLinks("http://www.caribbeannewsnow.com/archive.php/", 0);
     }
 }

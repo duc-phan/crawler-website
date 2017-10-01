@@ -25,7 +25,7 @@ public class Extractor {
         if (!links.contains(URL)) {
             try {
                 Document document = Jsoup.connect(URL).get();
-                Elements otherLinks = document.select("a[href^=\"http://www.mkyong.com/page/\"]");
+                Elements otherLinks = document.select("a[href^=\"http://www.caribbeannewsnow.com/\"]");
 
                 for (Element page : otherLinks) {
                     if (links.add(URL)) {
@@ -46,10 +46,10 @@ public class Extractor {
             Document document;
             try {
                 document = Jsoup.connect(x).get();
-                Elements articleLinks = document.select("h2 a[href^=\"http://www.mkyong.com/\"]");
+                Elements articleLinks = document.select("h2 a[href^=\"http://www.caribbeannewsnow.com/\"]");
                 for (Element article : articleLinks) {
                     //Only retrieve the titles of the articles that contain Java 8
-                    if (article.text().matches("^.*?(Java 8|java 8|JAVA 8).*$")) {
+//                    if (article.text().matches("^.*?(Java 8|java 8|JAVA 8).*$")) {
                         //Remove the comment from the line below if you want to see it running on your editor,
                         //or wait for the File at the end of the execution
                         //System.out.println(article.attr("abs:href"));
@@ -58,7 +58,7 @@ public class Extractor {
                         temporary.add(article.text()); //The title of the article
                         temporary.add(article.attr("abs:href")); //The URL of the article
                         articles.add(temporary);
-                    }
+//                    }
                 }
             } catch (IOException e) {
                 System.err.println(e.getMessage());
@@ -89,7 +89,7 @@ public class Extractor {
 
     public static void main(String[] args) {
         Extractor bwc = new Extractor();
-        bwc.getPageLinks("http://www.mkyong.com");
+        bwc.getPageLinks("http://www.caribbeannewsnow.com/archive.php");
         bwc.getArticles();
         bwc.writeToFile("Java 8 Articles");
     }

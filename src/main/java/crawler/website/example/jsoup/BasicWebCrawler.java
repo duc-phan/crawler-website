@@ -43,7 +43,7 @@ public class BasicWebCrawler {
 
     public static void main(String[] args) {
         //1. Pick a URL from the frontier
-        new BasicWebCrawler().getPageLinks("http://www.mkyong.com/");
+        new BasicWebCrawler().getPageLinks("http://www.caribbeannewsnow.com/archive.php");
     }
 
 }
