@@ -9,9 +9,10 @@ import org.jsoup.select.Elements;
 import java.text.ParseException;
 import java.util.Date;
 
-public class ArchivedCaribbeanNewsNowParser implements  CaribbeanNewsNowParser{
+public class ArchivedCaribbeanNewsNowParser implements ArticleParser {
     public static final String HOME_PAGE_URL                    = "http://www.caribbeannewsnow.com";
     public static final String FIRST_PAGE_URL                   = "http://www.caribbeannewsnow.com/archive.php";
+    public static final String DOMAIN                           = "caribbeannewsnow.com";
     public static final String SUB_DOMAIN                       = "www";
 
     private static final String ARTICLE_TITLE_CSS               = "tbody > tr > td.title";

@@ -2,7 +2,7 @@ package crawler.website.parser;
 
 import java.util.Date;
 
-public interface CaribbeanNewsNowParser {
+public interface ArticleParser {
     String parseArticleImageLink();
     String parseArticleContent();
     String parseArticleTitle();

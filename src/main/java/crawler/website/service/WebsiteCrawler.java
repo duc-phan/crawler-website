@@ -3,7 +3,8 @@ package crawler.website.service;
 import crawler.website.domain.Article;
 import crawler.website.domain.ArticleService;
 import crawler.website.parser.ArchivedCaribbeanNewsNowParser;
-import crawler.website.parser.CaribbeanNewsNowParser;
+import crawler.website.parser.ArticleParser;
+import crawler.website.parser.CbcParser;
 import crawler.website.parser.WpCaribbeanNewsNowParser;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
@@ -41,7 +42,8 @@ public class WebsiteCrawler extends WebCrawler {
         }
 
         // Only accept the url if it is in the "www.ics.uci.edu" domain and protocol is "http".
-        return href.startsWith(WpCaribbeanNewsNowParser.HOME_PAGE_URL) || href.startsWith(ArchivedCaribbeanNewsNowParser.HOME_PAGE_URL);
+        return href.startsWith(WpCaribbeanNewsNowParser.HOME_PAGE_URL) || href.startsWith(ArchivedCaribbeanNewsNowParser.HOME_PAGE_URL)
+                || href.startsWith(CbcParser.HOME_PAGE_URL);
     }
 
     /**
@@ -54,13 +56,16 @@ public class WebsiteCrawler extends WebCrawler {
         if (page.getParseData() instanceof HtmlParseData) {
             HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
             String html = htmlParseData.getHtml();
-            CaribbeanNewsNowParser parser;
+            ArticleParser parser;
 
             String subDomain = page.getWebURL().getSubDomain();
-            if (WpCaribbeanNewsNowParser.SUB_DOMAIN.equals(subDomain)) {
+            String domain = page.getWebURL().getDomain();
+            if (WpCaribbeanNewsNowParser.DOMAIN.equals(domain) && WpCaribbeanNewsNowParser.SUB_DOMAIN.equals(subDomain)) {
                 parser = new WpCaribbeanNewsNowParser(html);
-            } else if (ArchivedCaribbeanNewsNowParser.SUB_DOMAIN.equals(subDomain)) {
+            } else if (ArchivedCaribbeanNewsNowParser.DOMAIN.equals(domain) && ArchivedCaribbeanNewsNowParser.SUB_DOMAIN.equals(subDomain)) {
                 parser = new ArchivedCaribbeanNewsNowParser(html);
+            } else if (CbcParser.DOMAIN.equals(domain) && CbcParser.SUB_DOMAIN.equals(subDomain)) {
+                parser = new CbcParser(html);
             } else {
                 logger.info("--------- NOT SUPPORT SUB DOMAIN --------------------------------");
                 return;
@@ -80,7 +85,7 @@ public class WebsiteCrawler extends WebCrawler {
             article.setContent(parser.parseArticleContent());
             article.setImageLink(parser.parseArticleImageLink());
 
-            articleService.saveArticle(article);
+//            articleService.saveArticle(article);
 
             logger.info("Article URL:");
             logger.info("    " + page.getWebURL().getURL());
